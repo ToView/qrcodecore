@@ -2,6 +2,7 @@ package org.oriboy.qrcode.common;
 
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
@@ -10,9 +11,9 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
-import net.coobird.thumbnailator.resizers.configurations.Rendering;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.FileSystems;
@@ -114,6 +115,22 @@ public class QRCodeUtils {
         BitMatrix bitMatrix = createBitMatrix(text, BarcodeFormat.QR_CODE, width, height, ENCODE_HINTS);
         Path path = FileSystems.getDefault().getPath(filePath);
         MatrixToImageWriter.writeToPath(bitMatrix, FORMAT, path);
+    }
+
+    /**
+     * @title 生成二维码图片
+     * @description 根据文本内容，自定义宽度高度，生成所需要的二维码图片
+     * @param text 文本内容
+     * @param filePath 生成图片文件路径
+     * @param width 宽度
+     * @param height 高度
+     * @param onColor 二维码颜色
+     * @param offColor 二维码背景颜色
+     */
+    public static void create(String text, String filePath, int width, int height, Color onColor, Color offColor) throws WriterException, IOException {
+        BitMatrix bitMatrix = createBitMatrix(text, BarcodeFormat.QR_CODE, width, height, ENCODE_HINTS);
+        Path path = FileSystems.getDefault().getPath(filePath);
+        MatrixToImageWriter.writeToPath(bitMatrix, FORMAT, path, new MatrixToImageConfig(onColor.getRGB(), offColor.getRGB()));
     }
 
     /**
