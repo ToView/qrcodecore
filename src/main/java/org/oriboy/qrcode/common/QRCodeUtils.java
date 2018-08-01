@@ -322,6 +322,19 @@ public class QRCodeUtils {
                 .toFile(filePath);
     }
 
+    /**
+     * 生成带logo的二维码图片
+     * @param text 文本内容
+     * @param filePath 生成文件存放路径
+     * @param logoPath logo文件路径
+     * @param hintTypes 生成配置
+     */
+    public static void createWithLogo(String text, String filePath, String logoPath, Map<EncodeHintType, Object> hintTypes) throws IOException, WriterException {
+        createWidthLogo(text, new FileInputStream(logoPath), QRCODE_WIDTH, QRCODE_WIDTH,
+                LOGO_WIDTH, LOGO_WIDTH, FORMAT, hintTypes)
+                .toFile(filePath);
+    }
+
 
     /**
      * 生成带有logo的二维码图片
@@ -338,6 +351,7 @@ public class QRCodeUtils {
                 .toOutputStream(outputStream);
         return outputStream;
     }
+
 
     /**
      * 生成带有logo的二维码图片
