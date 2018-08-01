@@ -28,6 +28,8 @@ QRCodeUtils是基于Google提供的zxing二维码生成库而整合的一个生�
 输入二维码图片输入流，解析配置，解析二维码信息。
 #### QRCodeUtils.createWithLogo(String text, String filePath, String logoPath)
 输入文本内容，即将存放路径，logo图片路径，生成带有logo的二维码图片。
+#### QRCodeUtils.createWithLogo(String text, String filePath, String logoPath, Map<EncodeHintType, Object> hintTypes)
+输入文本内容，即将存放路径，logo图片路径，生成配置，生成带有logo的二维码图片。
 #### QRCodeUtils.createWithLogo(String text, String filePath, String logoPath, int qrCodeWidth, int qrCodeHeight, int logoWidth, int logoHeight)
 输入文本内容，即将存放路径，logo图片路径，二维码宽度，二维码高度，logo宽度，logo高度，生成带有logo的二维码图片。
 #### QRCodeUtils.createWithLogo(String text, String filePath, String logoPath, int qrCodeWidth, int qrCodeHeight, int logoWidth, int logoHeight, String format)
