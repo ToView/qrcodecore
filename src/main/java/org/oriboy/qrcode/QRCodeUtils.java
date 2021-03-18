@@ -1,4 +1,4 @@
-package org.oriboy.qrcode.common;
+package org.oriboy.qrcode;
 
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
@@ -18,7 +18,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 /**
@@ -57,12 +57,12 @@ public class QRCodeUtils {
     /**
      * 生成二维码参数
      */
-    private static final Map<EncodeHintType, Object> ENCODE_HINTS = new HashMap();
+    private static final EnumMap<EncodeHintType, Object> ENCODE_HINTS = new EnumMap<>(EncodeHintType.class);
 
     /**
      * 解析二维码参数
      */
-    private static final Map<DecodeHintType, Object> DECODE_HINTS = new HashMap<>();
+    private static final Map<DecodeHintType, Object> DECODE_HINTS = new EnumMap<>(DecodeHintType.class);
 
     static {
         /* 字符编码 */
@@ -74,6 +74,10 @@ public class QRCodeUtils {
 
         /* 字符编码 */
         DECODE_HINTS.put(DecodeHintType.CHARACTER_SET, "UTF-8");
+    }
+
+    private QRCodeUtils() {
+
     }
 
     /**
@@ -403,7 +407,8 @@ public class QRCodeUtils {
      * @return BitMatrix
      * @throws WriterException
      */
-    private static BitMatrix createBitMatrix(String text, BarcodeFormat barcodeFormat, int width, int height, Map<EncodeHintType, Object> hintTypes) throws WriterException {
+    private static BitMatrix createBitMatrix(String text, BarcodeFormat barcodeFormat, int width, int height, Map<EncodeHintType, Object> hintTypes)
+            throws WriterException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         return qrCodeWriter.encode(text, barcodeFormat, width, height, hintTypes);
     }
@@ -455,14 +460,14 @@ public class QRCodeUtils {
      * @param qrCodeHeight 二维码高度
      * @param logoWidth logo宽度
      * @param logoHeight logo高度
-     * @param ENCODE_HINTS 二维码配置
+     * @param encodeHints 二维码配置
      * @return 输出流
      * @throws WriterException
      * @throws IOException
      */
     private static Thumbnails.Builder<BufferedImage> createWidthLogo(String text, InputStream logoInputStream, int qrCodeWidth, int qrCodeHeight, int logoWidth, int logoHeight,
-                                                String format, Map<EncodeHintType, Object> ENCODE_HINTS) throws WriterException, IOException {
-        BitMatrix bitMatrix = createBitMatrix(text, BarcodeFormat.QR_CODE, qrCodeWidth, qrCodeHeight, ENCODE_HINTS);
+                                                String format, Map<EncodeHintType, Object> encodeHints) throws WriterException, IOException {
+        BitMatrix bitMatrix = createBitMatrix(text, BarcodeFormat.QR_CODE, qrCodeWidth, qrCodeHeight, encodeHints);
         /* 生成二维码的bufferedImage */
         BufferedImage qrcode = MatrixToImageWriter.toBufferedImage(bitMatrix);
         /* 创建图片构件对象 */
